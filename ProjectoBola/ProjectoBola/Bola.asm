@@ -180,12 +180,12 @@ Cup:	cmp			pelota_columna,1
 
 CDcol1:	mov			al,Rbf		;Reviso si hay choque con Raqueta B.
 		cmp			al,pelota_fila
-		jg			GameO1		;Salto a Game Over.
+	
 		add			al,3
 		cmp			al,pelota_fila
 	    ;sub			al,2  ;Le resto dos a al
 		mov			Fil,al ;Sirve para hacer que la bola aparezca en el centro de la raqueta
-		jl			GameO1		;Salto a Game Over.
+		
 		mov			Dcol,1		;Cambia Dirección de Movimiento en Columna.
 		
 		
@@ -203,10 +203,10 @@ CDcol1:	mov			al,Rbf		;Reviso si hay choque con Raqueta B.
 
 CDcol2:	mov			al,Raf		;Reviso si hay choque con Raqueta A.
 		cmp			al,pelota_fila
-		jg			GameO2		;Salto a Game Over.
+	
 		add			al,3
 		cmp			al,pelota_fila
-		jl			GameO2		;Salto a Game Over.
+	
 		mov			Dcol,0		;Vuelve cursor a inicio de fila.
 		jmp			Cfil
 
