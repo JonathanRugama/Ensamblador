@@ -9,17 +9,17 @@ INCLUDELIB c:\Irvine\Irvine32.lib
 
 		.data		;Directiva de Inicio de Variables.
 
-TBox	db			"Ball Game",0	;T韙ulo de Ventana.
+TBox	db			"Ball Game",0	;T铆tulo de Ventana.
 TgoJA	byte		"Game Over - Gana Jugador A",0
 TgoJB	byte		"Game Over - Gana Jugador B",0
-TgoVJ	byte		"緿esea volver a jugar?",0
+TgoVJ	byte		"驴Desea volver a jugar?",0
 Ball	byte		'0'
 Col		byte		1		;Columna de Bola.
 Fil		byte		10		;Fila de Bola.
-Maxc	byte		0		;Columna M醲ima.
-Maxf	byte		0		;Fila M醲ima.
-Dcol	byte		0		;Direcci髇 Columna. (0 = Derecha, 1 = Izquierda).
-Dfil	byte		0		;Direcci髇 Fila. (0 = Abajo, 1 = Arriba).
+Maxc	byte		0		;Columna M谩xima.
+Maxf	byte		0		;Fila M谩xima.
+Dcol	byte		0		;Direcci贸n Columna. (0 = Derecha, 1 = Izquierda).
+Dfil	byte		0		;Direcci贸n Fila. (0 = Abajo, 1 = Arriba).
 Raf		byte		10		;Fila de Raqueta A.
 Rac		byte		0		;Columna Raqueta A.
 Rbf		byte		10		;Fila de Raqueta B.
@@ -28,21 +28,21 @@ Rbc		byte		0		;Columna Raqueta B.
 		.code
 
 ;*************************************************************************************************
-; FUNCI覰 MAIN                                                                                   *
+; FUNCI脫N MAIN                                                                                   *
 ;*************************************************************************************************
 
 main	PROC
 
-Inicio: call		GetMaxXY	;Toma el Tama駉 Actual de la Ventana de Consola.
+Inicio: call		GetMaxXY	;Toma el Tama帽o Actual de la Ventana de Consola.
 		mov			Maxc,dl
 		mov			Rbc,dl
 		mov			Maxf,23
 		sub			Maxc,2
 		sub			Rbc,1
-		mov			dh,0		;Escribe L韓ea Superior.
+		mov			dh,0		;Escribe L铆nea Superior.
 		mov			dl,0
 		call		WLin
-		mov			dh,24		;Escribe L韓ea Inferior.
+		mov			dh,24		;Escribe L铆nea Inferior.
 		mov			dl,0
 		call		WLin
 		call		Wjuga		;Escribe Identificadores para Jugadores.
@@ -56,7 +56,7 @@ Ciclo:	call		Wball		;Escribe la Bola.
 		mov			dh,Rbf		;Escribe Raqueta B.
 		mov			dl,Rbc
 		call		WRaq
-		mov			eax,10	;Espera de 200 ms (0.2 s).      
+		mov			eax,20	;Espera de 200 ms (0.2 s).      
 		call		Delay
 		call		CBall		;Borra la Bola.
 		
@@ -75,39 +75,39 @@ Tecla:	cmp			al,'a'		;Si Tecla es 'a' --> Raqueta 1 Arriba.
 		je			RbDw
 		jmp			Ccol		;Si es otra Tecla salto a Control Columna.
 
-RaUp:	mov			dh,Raf		;Borro Raqueta A posici髇 Actual.
+RaUp:	mov			dh,Raf		;Borro Raqueta A posici贸n Actual.
 		mov			dl,Rac
 		call		CRaq
 		cmp			Raf,1		;Comparo Fila de Raqueta A con 0.
-		je			Ccol		;Si son iguales, no subo m醩 y voy a Coltrol Columna.
+		je			Ccol		;Si son iguales, no subo m谩s y voy a Coltrol Columna.
 		dec			Raf			;Subo la Raqueta A una fila.
 		jmp			Ccol		;Salto a Control Columna.
 
-RaDw:	mov			dh,Raf		;Borro Raqueta A posici髇 Actual.
+RaDw:	mov			dh,Raf		;Borro Raqueta A posici贸n Actual.
 		mov			dl,Rac
 		call		CRaq
 		cmp			Raf,20		;Comparo Fila de Raqueta A con 24 - 3.
-		je			Ccol		;Si son iguales, no bajo m醩 y voy a Coltrol Columna.
+		je			Ccol		;Si son iguales, no bajo m谩s y voy a Coltrol Columna.
 		inc			Raf			;Bajo la Raqueta A una fila.
 		jmp			Ccol		;Salto a Control Columna.
 
-RbUp:	mov			dh,Rbf		;Borro Raqueta B posici髇 Actual.
+RbUp:	mov			dh,Rbf		;Borro Raqueta B posici贸n Actual.
 		mov			dl,Rbc
 		call		CRaq
 		cmp			Rbf,1		;Comparo Fila de Raqueta B con 0.
-		je			Ccol		;Si son iguales, no subo m醩 y voy a Coltrol Columna.
+		je			Ccol		;Si son iguales, no subo m谩s y voy a Coltrol Columna.
 		dec			Rbf			;Subo la Raqueta B una fila.
 		jmp			Ccol		;Salto a Control Columna.
 
-RbDw:	mov			dh,Rbf		;Borro Raqueta B posici髇 Actual.
+RbDw:	mov			dh,Rbf		;Borro Raqueta B posici贸n Actual.
 		mov			dl,Rbc
 		call		CRaq
 		cmp			Rbf,20		;Comparo Fila de Raqueta B con 24 - 3.
-		je			Ccol		;Si son iguales, no bajo m醩 y voy a Coltrol Columna.
+		je			Ccol		;Si son iguales, no bajo m谩s y voy a Coltrol Columna.
 		inc			Rbf			;Bajo la Raqueta B una fila.
 		jmp			Ccol		;Salto a Control Columna.
 
-Ccol:	cmp			Dcol,0		;Reviso Direcci髇 Movimiento de Columna.
+Ccol:	cmp			Dcol,0		;Reviso Direcci贸n Movimiento de Columna.
 		jne			Cup
 
 Cdown:	mov			al,Col		;Columna se Incrementa
@@ -124,17 +124,17 @@ Cup:	cmp			Col,1
 CDcol1:	mov			al,Rbf		;Reviso si hay choque con Raqueta B.
 		cmp			al,Fil 
 	
-		
+	
 		add			al,3
 		cmp			al,Fil
 		
-		mov			Dcol,1		;Cambia Direcci髇 de Movimiento en Columna.
+		mov			Dcol,1		;Cambia Direcci贸n de Movimiento en Columna.
 		jmp			Cfil
 
 CDcol2:	mov			al,Raf		;Reviso si hay choque con Raqueta A.
 		cmp			al,Fil 
 		
-		
+	
 		add			al,3
 		cmp			al,Fil
 	
@@ -142,7 +142,7 @@ CDcol2:	mov			al,Raf		;Reviso si hay choque con Raqueta A.
 	    
 		jmp			Cfil
 
-Cfil:	cmp			Dfil,0		;Reviso Direcci髇 de Movimiento en Fila.
+Cfil:	cmp			Dfil,0		;Reviso Direcci贸n de Movimiento en Fila.
         
 		jne			Fup
 
@@ -160,7 +160,7 @@ Fup:	cmp			Fil,1
 		dec			Fil
 		jmp			Ciclo
 
-CDfil1:	mov			Dfil,1		;Cambia Direcci髇 de Movimiento en Fila.
+CDfil1:	mov			Dfil,1		;Cambia Direcci贸n de Movimiento en Fila.
 		jmp			Ciclo
 
 CDfil2:	mov			Dfil,0		;Vuelve cursor a inicio de fila.
@@ -171,7 +171,7 @@ GameO1: call		CBall		;Borro la Bola. (Pierde Raqueta B).
 		mov			dl,Rbc
 		call		WRaq
 		inc			Col			;Incrementando Columna.
-		mov			al,Dfil		;Reviso Direcci髇 de Movimiento de la Bola.
+		mov			al,Dfil		;Reviso Direcci贸n de Movimiento de la Bola.
 		cmp			al,0
 		jne			Posf1
 		add			Fil,2		;Ajuste de Fila para Mostrar Final de Bola.
@@ -185,7 +185,7 @@ GameO2: call		CBall		;Borro la Bola. (Pierde Raqueta A).
 		mov			dl,Rac
 		call		WRaq
 		dec			Col			;Decrementando Columna.
-		mov			al,Dfil		;Reviso Direcci髇 de Movimiento de la Bola.
+		mov			al,Dfil		;Reviso Direcci贸n de Movimiento de la Bola.
 		cmp			al,0
 		jne			Posf2
 		add			Fil,2		;Ajuste de Fila para Mostrar Final de Bola.
@@ -200,11 +200,11 @@ Final:	mov			ebx,OFFSET TBox	 ;Muestra Ventaja de Game Over.
 		call		MsgBoxAsk
 		cmp			eax,6			 ;Si valor retornado en EAX no es 6,
 		jne			Fout			 ;se sale del juego.
-		call		CBall			 ;Borra Bola de Posici髇 Actual.
-		mov			dh,Raf			 ;Borro Raqueta A posici髇 Actual.
+		call		CBall			 ;Borra Bola de Posici贸n Actual.
+		mov			dh,Raf			 ;Borro Raqueta A posici贸n Actual.
 		mov			dl,Rac
 		call		CRaq
-		mov			dh,Rbf			 ;Borro Raqueta B posici髇 Actual.
+		mov			dh,Rbf			 ;Borro Raqueta B posici贸n Actual.
 		mov			dl,Rbc
 		call		CRaq
 		call		Inivar			 ;Preparando nuevo juego. Inicializar Variables.
@@ -222,8 +222,8 @@ Inivar	PROC
 
 		mov			Col,1		;Inicializa Columna de Bola.
 		mov			Fil,10		;Inicializa Fila de Bola.
-		mov			Dcol,0		;Inicializa Direcci髇 Avance Columna de Bola.
-		mov			Dfil,0		;Inicializa Direcci髇 Avance Fila de Bola.
+		mov			Dcol,0		;Inicializa Direcci贸n Avance Columna de Bola.
+		mov			Dfil,0		;Inicializa Direcci贸n Avance Fila de Bola.
 		mov			Raf,10		;Inicializa Fila de Raqueta A.
 		mov			Rac,0		;Inicializa Columna de Raqueta A.
 		mov			Rbf,10		;Inicializa Fila de Raqueta B.
@@ -308,7 +308,7 @@ Cball	PROC
 Cball	ENDP
 
 ;*************************************************************************************************
-; PROCEDIMIENTO WRAQ - Escribe Raqueta (Par醡etros: Dh --> Fila y Dl --> Columna)
+; PROCEDIMIENTO WRAQ - Escribe Raqueta (Par谩metros: Dh --> Fila y Dl --> Columna)
 ;*************************************************************************************************
 
 WRaq	PROC
@@ -326,7 +326,7 @@ WRaqc:	call		Gotoxy		;Posicionar Cursor.
 Wraq	ENDP
 
 ;*************************************************************************************************
-; PROCEDIMIENTO CRAQ - Borra Raqueta (Par醡etros: Dh --> Fila y Dl --> Columna)
+; PROCEDIMIENTO CRAQ - Borra Raqueta (Par谩metros: Dh --> Fila y Dl --> Columna)
 ;*************************************************************************************************
 
 Craq	PROC
@@ -344,7 +344,7 @@ CRaqc:	call		Gotoxy		;Posicionar Cursor.
 Craq	ENDP
 
 ;*************************************************************************************************
-; PROCEDIMIENTO WLIN - Escribe L韓ea de Caracteres (Par醡etros: Dh --> Fila y Dl --> Columna)
+; PROCEDIMIENTO WLIN - Escribe L铆nea de Caracteres (Par谩metros: Dh --> Fila y Dl --> Columna)
 ;*************************************************************************************************
 
 WLin	PROC
